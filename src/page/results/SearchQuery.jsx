@@ -26,13 +26,13 @@ function SearchQuery() {
 
   return (
     <div>
-{/*       <h1>Search Results</h1>
+      {/*       <h1>Search Results</h1>
       <p>Search Query: {searchQuery}</p>
  */}
       {data && data.results && data.results.length > 0 ? (
         <div>
           <h2>Results:</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5">
             {data.results.map((result) => {
               // Select the correct name/title field based on result type
               const title = result.title || result.name;
@@ -40,7 +40,15 @@ function SearchQuery() {
                 ? `${IMG_URL}${result.poster_path}`
                 : "/path/to/default-image.jpg"; // Use a default image if no poster is available
 
-              return <Card1 key={result.id} name={title} img={posterUrl} id={result.id} type={result.media_type} />;
+              return (
+                <Card1
+                  key={result.id}
+                  name={title}
+                  img={posterUrl}
+                  id={result.id}
+                  type={result.media_type}
+                />
+              );
             })}
           </div>
         </div>
