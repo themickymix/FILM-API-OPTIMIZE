@@ -8,4 +8,9 @@ export default {
     extend: {},
   },
   plugins: [tailwindcssAnimated, daisyui],
+  daisyui: {
+    themes: [
+      "business", // Set the default theme to "cupcake"
+    ],
+  },
 };
