@@ -4,8 +4,8 @@ import { useSeasonEpisode } from "./SeasonEpisodeProvider";
 import { IMG_URL } from "../../../server/config";
 
 function Episode({ id }) {
-  const { season, setEpisode } = useSeasonEpisode();
-  const [activeEpisode, setActiveEpisode] = useState(1);
+  const { season, setEpisode, episode } = useSeasonEpisode();
+  const [activeEpisode, setActiveEpisode] = useState(episode);
   const API_URL = `https://api.themoviedb.org/3/tv/${id}/season/${season}?language=en-US`;
   const { data, loading } = GetApi(API_URL);
 
@@ -19,7 +19,12 @@ function Episode({ id }) {
       });
   };
 
-  if (loading) return <div className="spinner">Loading...</div>;
+  if (loading)
+    return (
+      <div className="w-full h-full flex justify-items-center justify-center">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
 
   return (
     <div>
@@ -36,9 +41,9 @@ function Episode({ id }) {
           );
           return (
             <li
-              className={`cursor-pointer hover:bg-[#3737372c] p-2 rounded-md ${
+              className={`cursor-pointer hover:bg-[#212325] p-2 rounded-md ${
                 ep.episode_number === activeEpisode
-                  ? "bg-[#18181847] text-white"
+                  ? "bg-[#242628] text-white"
                   : ""
               }`}
               key={ep.id}

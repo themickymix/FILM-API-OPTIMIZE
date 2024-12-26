@@ -6,7 +6,12 @@ function Cast({ id }) {
   const API_URL = `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`;
   const { data, loading, error } = GetApi(API_URL);
 
-  if (loading) return <p>Loading...</p>;
+if (loading)
+  return (
+    <div className="w-full h-[100vh] flex justify-items-center justify-center">
+      <span className="loading loading-spinner loading-lg"></span>
+    </div>
+  );
   if (error) return <p>Error: {error}</p>;
 
   return (

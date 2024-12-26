@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { GetApi } from "../../../custom-hooks/GetApi";
 import Recommendations from "./Recommendations";
 import Cast from "./Cast";
+import Reviews from "./Reviews";
 
 function MovieResult() {
   const { id } = useParams();
@@ -36,7 +37,12 @@ function MovieResult() {
   const API_URL = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
   const { data, loading, error } = GetApi(API_URL);
 
-  if (loading) return <p>Loading...</p>;
+if (loading)
+  return (
+    <div className="w-full h-[100vh] flex justify-items-center justify-center">
+      <span className="loading loading-spinner loading-lg"></span>
+    </div>
+  );
   if (error) return <p>Error: {error}</p>;
 
   // Map over genres to display the genre names
@@ -78,6 +84,9 @@ function MovieResult() {
                 </span>
               </div>
             </div>
+          </div>
+          <div className="w-[800px] hidden lg:block">
+            <Reviews />
           </div>
         </div>
         <div>
@@ -136,6 +145,9 @@ function MovieResult() {
             </div>
           )}
         </div>
+      </div>
+      <div className="lg:hidden">
+        <Reviews />
       </div>
     </div>
   );

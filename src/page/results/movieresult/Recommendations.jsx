@@ -30,7 +30,12 @@ function Recommendations({ id }) {
     }
   }, [genresData]);
 
-  if (loading || genresLoading) return <p>Loading...</p>;
+if (loading)
+  return (
+    <div className="w-full h-[100vh] flex justify-items-center justify-center">
+      <span className="loading loading-spinner loading-lg"></span>
+    </div>
+  );
   if (error || genresError) return <p>Error: {error || genresError}</p>;
 
   const handleNavigate = (title, id) => {

@@ -6,6 +6,7 @@ import { useSeasonEpisode } from "./SeasonEpisodeProvider";
 import EpisodeInfo from "./EpisodeInfo";
 import Recommendations from "./Recommendations";
 import Cast from "./Cast";
+import Reviews from "./Reviews";
 
 function TVResult() {
   const { id } = useParams();
@@ -49,8 +50,8 @@ if (loading)
                 title="Embedded Video"></iframe>
             </div>
           </div>
-          <div className="p-2 md:p-0 mt-2 md:flex gap-2 hidden mb-10">
-            <div className="w-[800px]">
+          <div className="p-2 md:p-0 mt-2 md:flex gap-2 mb-2">
+            <div className="lg:w-[800px]">
               <div>
                 <EpisodeInfo id={id} />
               </div>
@@ -58,7 +59,7 @@ if (loading)
           </div>
         </div>
         <div>
-          <span className="flex gap-2 mb-5 px-2 md:px-0">
+          <span className="flex gap-2 mb-5 px-2 md:px-0 overflow-auto ">
             <button
               className={`bg-[#292829] py-1 px-4 rounded-md ${
                 activeSection === "episode"
@@ -102,7 +103,7 @@ if (loading)
           {activeSection === "recommendation" && <Recommendations id={id} />}
           {activeSection === "cast" && <Cast id={id} />}
           {activeSection === "episode" && (
-            <div className="p-2 md:p-0 ">
+            <div className="p-2 md:p-0">
               <select
                 className="select w-full  mb-2"
                 onChange={handleSeasonChange}
@@ -120,11 +121,12 @@ if (loading)
           {activeSection === "overview" && (
             <div className="p-2 md:p-0 mt-2 md:flex gap-2">
               <div>
+                <h3 className="font-bold my-2">{data.name}</h3>
                 <p className="text-sm font-light">{data.overview}</p>
                 <div>
                   <span>
                     <strong>Released: </strong>
-                    <span className="font-light">{data.release_date}</span>
+                    <span className="font-light">{data.first_air_date}</span>
                   </span>
                 </div>
                 <div>
@@ -137,6 +139,9 @@ if (loading)
             </div>
           )}
         </div>
+      </div>
+      <div className="lg:hidden">
+        <Reviews />
       </div>
     </div>
   );

@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { IMG_URL } from "../../server/config";
-import { space } from "postcss/lib/list";
-function Card2({ img, name, date, id, type, country }) {
+function HomeCard({ img, name, date, id, type }) {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [hasError, setHasError] = useState(false); // Handle image load errors
 
@@ -17,13 +16,7 @@ function Card2({ img, name, date, id, type, country }) {
     setHasError(true); // Set error state if image fails to load
     setIsImageLoaded(true); // Hide skeleton loader even on error
   };
-  const types = type === "tv" ? " TV Show" : " Movie";
-  if (!country === "") {
-    return country;
-  }
-  if (!date === "") {
-    return date;
-  }
+
   return (
     <Link
       key={id}
@@ -31,17 +24,18 @@ function Card2({ img, name, date, id, type, country }) {
         .replace(/\s+/g, "-")
         .replace(/-/g, "-")
         .toLowerCase()}/${id}`}>
-      <div className="relative flex flex-col gap-2">
+      <div className="relative flex flex-col gap-2 overflow-hidden">
         {/* Skeleton Loader for image - Shown until image is loaded */}
         {!isImageLoaded && !hasError && (
-          <div className="skeleton rounded-md w-52  h-72 object-cover animate-pulse flex justify-center items-center text-center">
+          <div className="skeleton rounded-md w-40  h-56 object-cover animate-pulse flex justify-center items-center text-center">
             <span className="animate-fade">
               <Loader />
             </span>
           </div>
         )}
+
         <img
-          className={`rounded-md w-52  h-72 object-cover ${
+          className={`rounded-md w-40  h-56 object-cover ${
             isImageLoaded ? "" : "hidden"
           }`}
           src={IMG_URL + img}
@@ -54,23 +48,9 @@ function Card2({ img, name, date, id, type, country }) {
           <div className="skeleton h-4 w-full animate-pulse"></div>
         )}
 
-        <span className={` ${isImageLoaded ? "" : "hidden"}`}>
-          <div className="text-xs font-semibold whitespace-nowrap overflow-hidden text-ellipsis w-full">
-            <div>{name}</div>
-            {types + " "}
-            {date && (
-              <span>
-                <span className="font-normal text-gray-500">&bull;</span>
-                {" " + date + " "}
-              </span>
-            )}
-
-            {country && (
-              <span>
-                <span className="font-normal text-gray-500">&bull;</span>
-                {" " + country}
-              </span>
-            )}
+        <span className={`flex ${isImageLoaded ? "" : "hidden"}`}>
+          <div className="text-xs font-semibold ml-1 whitespace-nowrap overflow-hidden text-ellipsis w-full">
+            {name}
           </div>
         </span>
       </div>
@@ -78,4 +58,4 @@ function Card2({ img, name, date, id, type, country }) {
   );
 }
 
-export default Card2;
+export default HomeCard;

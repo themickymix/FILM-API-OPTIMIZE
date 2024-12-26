@@ -4,7 +4,7 @@ import { GetApi } from "../../../custom-hooks/GetApi";
 
 function Reviews() {
   const { id } = useParams();
-  const API_URL = `https://api.themoviedb.org/3/tv/${id}/reviews?language=en-US`;
+  const API_URL = `https://api.themoviedb.org/3/movie/${id}/reviews?language=en-US`;
 
   // Use the custom hook to fetch reviews
   const { data, error } = GetApi(API_URL);
@@ -85,7 +85,9 @@ function Reviews() {
                       {rev.author} &bull;{" "}
                       <span className="text-xs font-light">{timeAgo}</span>
                     </h3>
-                    <div className="text-xs bg-[#27272794] text-white rounded-md p-2 my-1">
+                    <div
+                      className="text-xs bg-[#27272794] text-white rounded-md p-2 my-1"
+                      >
                       <p
                         className={`whitespace-pre-line ${
                           isExpanded ? "" : "line-clamp-3"
@@ -93,8 +95,7 @@ function Reviews() {
                         {rev.content}
                       </p>
 
-                      {rev.content.split("\n").length > 3 ||
-                      rev.content.length > 300 ? (
+                      {rev.content.split("\n").length > 3 || rev.content.length > 300 ? (
                         <button
                           className="hover:underline font-bold text-gray-400"
                           onClick={() => handleToggleExpand(index)}>
