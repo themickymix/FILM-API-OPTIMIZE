@@ -23,7 +23,7 @@ function Home() {
   return (
     <div className="">
       {/* Trending Section */}
-      <span className="flex justify-between items-center w-full px-[15%]">
+      <span className="flex justify-between items-center w-full px-5 md:px-[15%]">
         <span className="font-bold">Trending</span>
         <span className="flex">
           <button
@@ -42,12 +42,12 @@ function Home() {
           </button>
         </span>
       </span>
-      <div className="px-[15%]">
+      <div className="px-12 md:px-[15%]">
         {activeTrending === "movie" ? <TrendMovie /> : <TrendTV />}
       </div>
 
       {/* Popular Section */}
-      <span className="flex justify-between items-center w-full px-[15%] mt-20">
+      <span className="flex justify-between items-center w-full px-5 md:px-[15%] mt-20">
         <span className="font-bold ">Popular</span>
         <span className="flex">
           <button
@@ -66,7 +66,7 @@ function Home() {
           </button>
         </span>
       </span>
-      <div className="px-[15%]">
+      <div className="px-12 md:px-[15%]">
         {activePopular === "movie" ? <PopMovie /> : <PopTV />}
       </div>
     </div>
