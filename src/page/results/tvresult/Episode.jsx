@@ -58,9 +58,10 @@ function Episode({ id }) {
                       alt={ep.name}
                     />
                   ) : (
-                    <div className="w-40 bg-gray-300 flex items-center justify-center">
+                    <div className="w-40 rounded-md bg-gray-300 flex items-center justify-center">
                       <img
-                        src={"https://placehold.co/600x400?text=Hello+World"}
+                        className="rounded-md"
+                        src={"https://placehold.co/600x400?text=No+Image"}
                         alt=""
                       />
                     </div>

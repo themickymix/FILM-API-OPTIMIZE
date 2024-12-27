@@ -23,7 +23,7 @@ function EpisodeInfo() {
   return (
     <div>
       <div className="text-xl font-semibold text-white">
-        Season {season}, Episode {episode} : {data.name}
+        S{season}E{episode} - {data.name}
       </div>
       {data.overview && (
         <div className="p-3 mt-2 bg-[#272727] text-white rounded-md hidden lg:block">

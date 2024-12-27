@@ -2,9 +2,19 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { IMG_URL } from "../../server/config";
+
+// Constant for Skeleton Loader
+const SkeletonLoader = () => (
+  <div className="skeleton rounded-md w-52 h-72 object-cover animate-pulse flex justify-center items-center text-center">
+    <span className="animate-fade">
+      <Loader />
+    </span>
+  </div>
+);
+
 function HomeCard({ img, name, date, id, type }) {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const [hasError, setHasError] = useState(false); // Handle image load errors
+  const [hasError, setHasError] = useState(false);
 
   // Handles image load success
   const handleImageLoad = () => {
@@ -20,37 +30,34 @@ function HomeCard({ img, name, date, id, type }) {
   return (
     <Link
       key={id}
-      to={`/${type}/${(name || "unknown") // Fallback for undefined name
+      to={`/${type}/${(name || "unknown")
         .replace(/\s+/g, "-")
         .replace(/-/g, "-")
         .toLowerCase()}/${id}`}>
-      <div className="relative flex flex-col gap-2 overflow-hidden">
-        {/* Skeleton Loader for image - Shown until image is loaded */}
-        {!isImageLoaded && !hasError && (
-          <div className="skeleton rounded-md w-40  h-56 object-cover animate-pulse flex justify-center items-center text-center">
-            <span className="animate-fade">
-              <Loader />
-            </span>
-          </div>
-        )}
+      <div className="relative flex flex-col gap-2">
+        {/* Show Skeleton Loader while image is loading */}
+        {!isImageLoaded && !hasError && <SkeletonLoader />}
 
+        {/* Image with conditional rendering */}
         <img
-          className={`rounded-md w-40  h-56 object-cover ${
+          className={`rounded-md w-52 h-72 object-cover ${
             isImageLoaded ? "" : "hidden"
           }`}
           src={IMG_URL + img}
-          alt={name}
+          alt={name || "Movie Image"}
           onLoad={handleImageLoad}
           onError={handleImageError}
         />
 
+        {/* Title skeleton while loading */}
         {!isImageLoaded && !hasError && (
           <div className="skeleton h-4 w-full animate-pulse"></div>
         )}
 
-        <span className={`flex ${isImageLoaded ? "" : "hidden"}`}>
+        {/* Title (visible after image is loaded or if there's an error) */}
+        <span className={`flex ${isImageLoaded || hasError ? "" : "hidden"}`}>
           <div className="text-xs font-semibold ml-1 whitespace-nowrap overflow-hidden text-ellipsis w-full">
-            {name}
+            {name || "Unknown Title"}
           </div>
         </span>
       </div>

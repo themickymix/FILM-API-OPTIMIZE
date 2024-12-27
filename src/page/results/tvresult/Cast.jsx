@@ -24,8 +24,8 @@ function Cast({ id }) {
               className="flex justify-items-center place-items-center gap-2">
               <img
                 className="w-16 rounded-lg"
-                src={IMG_URL + cast.profile_path}
-                alt=""
+                src={cast.profile_path ? IMG_URL + cast.profile_path : "https://placehold.co/400x600?text=No+Image"}
+                alt={cast.name}
               />
               <div>
                 <div className="text-sm"> {cast.name}</div>

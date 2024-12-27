@@ -20,14 +20,16 @@ function Card1({ img, name, date, id, type }) {
   return (
     <Link
       key={id}
-      to={`/${type}/${(name || "unknown") // Fallback for undefined name
-        .replace(/\s+/g, "-")
-        .replace(/-/g, "-")
-        .toLowerCase()}/${id}`}>
+      to={`/${type}/${encodeURIComponent(
+        (name || "unknown") // Fallback for undefined name
+          .replace(/\s+/g, "-") // Replace spaces with dashes
+          .replace(/[^a-zA-Z0-9-]/g, "") // Remove unwanted characters
+          .toLowerCase()
+      )}/${id}`}>
       <div className="relative flex flex-col gap-2 overflow-hidden">
         {/* Skeleton Loader for image - Shown until image is loaded */}
         {!isImageLoaded && !hasError && (
-          <div className="skeleton rounded-md w-52  h-72 object-cover animate-pulse flex justify-center items-center text-center">
+          <div className="skeleton rounded-md w-52  h-72  animate-pulse flex justify-center items-center text-center">
             <span className="animate-fade">
               <Loader />
             </span>

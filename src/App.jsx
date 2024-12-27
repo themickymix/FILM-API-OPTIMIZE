@@ -6,6 +6,7 @@ import TV from "./page/tvshow/TV";
 import Home from "./page/home/Home";
 import Navbar from "./components/Navbar";
 import SearchQuery from "./page/results/SearchQuery";
+import Search from "./page/Search";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/movie/:name/:id" element={<FilmResult />} />
         <Route path="/tv/:name/:id" element={<FilmResult />} />
         <Route path="/results" element={<SearchQuery />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
     </BrowserRouter>
   );
