@@ -10,7 +10,6 @@
   text-overflow: ellipsis;
 }
 
-
 /* From Uiverse.io by david-mohseni */
 .loader {
   position: relative;
@@ -103,9 +102,13 @@
 }
 
 .text-stroke {
-    text-shadow: -1.5px -1.5px 0 white, 1.5px -1.5px 0 white, -1.5px 1.5px 0 white, 1.5px 1.5px 0 white;
-    
+  text-shadow: -1.5px -1.5px 0 white, 1.5px -1.5px 0 white, -1.5px 1.5px 0 white,
+    1.5px 1.5px 0 white;
 }
-.text-shadows{
+.text-stroke-sm {
+  text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white,
+    1px 1px 0 white;
+}
+.text-shadows {
   text-shadow: 1px 1px 2px #000, 0 0 1em #000, 0 0 0.2em #000;
 }

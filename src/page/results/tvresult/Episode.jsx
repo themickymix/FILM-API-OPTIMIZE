@@ -50,7 +50,7 @@ function Episode({ id }) {
               onClick={() => handleEpisodeClick(ep.episode_number)}>
               <span className="flex gap-4">
                 {/* Conditionally display image if it exists */}
-                <div className="relative w-40">
+                <div className="relative w-[260px] md:w-40">
                   {ep.still_path ? (
                     <img
                       className="rounded-md"
@@ -58,7 +58,7 @@ function Episode({ id }) {
                       alt={ep.name}
                     />
                   ) : (
-                    <div className="w-40 rounded-md bg-gray-300 flex items-center justify-center">
+                    <div className=" rounded-md bg-gray-300 flex items-center justify-center">
                       <img
                         className="rounded-md"
                         src={"https://placehold.co/600x400?text=No+Image"}
@@ -66,12 +66,12 @@ function Episode({ id }) {
                       />
                     </div>
                   )}
-                  <span className="absolute flex bottom-0 text-white p-2 text-2xl shadow-lg">
+                  <span className="absolute text-stroke-sm flex bottom-0 text-black p-2 font-bold text-2xl shadow-lg">
                     {ep.episode_number}
                   </span>
                 </div>
 
-                <div className="whitespace-nowrap overflow-hidden w-96">
+                <div className="whitespace-nowrap overflow-hidden w-full md:w-96">
                   <div className="text-sm font-semibold overflow-hidden text-ellipsis">
                     {ep.name}
                   </div>
