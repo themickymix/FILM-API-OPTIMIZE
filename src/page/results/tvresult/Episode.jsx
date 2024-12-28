@@ -71,8 +71,10 @@ function Episode({ id }) {
                   </span>
                 </div>
 
-                <div>
-                  <div className="text-lg font-semibold">{ep.name}</div>
+                <div className="whitespace-nowrap overflow-hidden w-96">
+                  <div className="text-sm font-semibold overflow-hidden text-ellipsis">
+                    {ep.name}
+                  </div>
                   <div className="text-xs">{formattedDate}</div>
                   <div className="text-xs">
                     {ep.runtime ? `${ep.runtime + " Minutes"}` : ""}
