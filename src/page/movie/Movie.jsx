@@ -5,7 +5,7 @@ import Card1 from "../../shared/card/Card1";
 const Movie = () => {
   const [page, setPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
-  const API_URL = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1`;
+  const API_URL = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`;
   const { data, error } = GetApi(API_URL);
 
   // Update maxPage when data is available
@@ -74,15 +74,20 @@ const Movie = () => {
 
       {/* Movies Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
-        {data.results.map((movie) => (
-          <Card1
-            key={movie.id}
-            name={movie.title}
-            img={movie.poster_path}
-            id={movie.id}
-            type={"movie"}
-          />
-        ))}
+        {data.results.map((movie) => {
+          const date = movie.release_date.split("-")[0];
+
+          return (
+            <Card1
+              key={movie.id}
+              name={movie.title}
+              img={movie.poster_path}
+              id={movie.id}
+              type={"movie"}
+              date={date}
+            />
+          );
+        })}
       </div>
       {/* Pagination */}
       <div

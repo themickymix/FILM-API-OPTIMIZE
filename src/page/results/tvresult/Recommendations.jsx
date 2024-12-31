@@ -34,7 +34,7 @@ function Recommendations({ id }) {
 
   if (loading)
     return (
-      <div className="w-full h-full flex justify-items-center justify-center">
+      <div className="w-full h-[100vh] flex justify-items-center justify-center">
         <span className="loading loading-spinner loading-lg"></span>
       </div>
     );

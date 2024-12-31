@@ -24,15 +24,20 @@ const TV = () => {
         </Link>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        {data?.results.slice(0, 12).map((movie) => (
-          <Card1
-            key={movie.id}
-            id={movie.id}
-            name={movie.name}
-            img={movie.poster_path}
-            type="tv"
-          />
-        ))}
+        {data?.results.slice(0, 12).map((tv) => {
+          const date = tv.first_air_date.split("-")[0];
+
+          return (
+            <Card1 
+              key={tv.id}
+              name={tv.name}
+              img={tv.poster_path}
+              id={tv.id}
+              type={"tv"}
+              date={date}
+            />
+          );
+        })}
       </div>
     </div>
   );

@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { GetApi } from "../../../custom-hooks/GetApi";
 import Recommendations from "./Recommendations";
 import Cast from "./Cast";
 import Reviews from "./Reviews";
+import { FilmContext } from "../../../FilmProvider";
 
 function MovieResult() {
   const { id } = useParams();
   const [activeSection, setActiveSection] = useState("overview");
-
+  const { setFilmTitle } = useContext(FilmContext);
   // Update default section based on screen size
   useEffect(() => {
     const updateActiveSection = () => {
@@ -37,12 +38,21 @@ function MovieResult() {
   const API_URL = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
   const { data, loading, error } = GetApi(API_URL);
 
-if (loading)
-  return (
-    <div className="w-full h-[100vh] flex justify-items-center justify-center">
-      <span className="loading loading-spinner loading-lg"></span>
-    </div>
-  );
+  useEffect(() => {
+    // If there's no data yet, clear the title to avoid showing the old one
+    if (data && data.title) {
+      setFilmTitle(data.title);
+    } else {
+      setFilmTitle(""); // Reset the title if no data is available
+    }
+  }, [data, setFilmTitle]); // Make sure to include setFilmTitle as a dependency
+
+  if (loading)
+    return (
+      <div className="w-full h-[100vh] flex justify-items-center justify-center">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
   if (error) return <p>Error: {error}</p>;
 
   // Map over genres to display the genre names

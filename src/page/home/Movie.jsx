@@ -16,24 +16,29 @@ const Movie = () => {
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold mb-4">Movies</h1>
 
-        <Link to='/movie'>
-        <div className='justify-self-end flex items-center text-white cursor-pointer hover:text-purple-500'> 
+        <Link to="/movie">
+          <div className="justify-self-end flex items-center text-white cursor-pointer hover:text-purple-500">
             More
-          <box-icon name="chevron-right" color="#ffffff"></box-icon>
-        </div>
+            <box-icon name="chevron-right" color="#ffffff"></box-icon>
+          </div>
         </Link>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        {data?.results.slice(0, 12).map((movie) => (
-          <Card1
-            key={movie.id}
-            id={movie.id}
-            name={movie.title}
-            img={movie.poster_path}
-            type="movie"
-          />
-        ))}
+        {data?.results.slice(0, 12).map((movie) => {
+          const date = movie.release_date.split("-")[0];
+
+          return (
+            <Card1
+              key={movie.id}
+              name={movie.title}
+              img={movie.poster_path}
+              id={movie.id}
+              type={"movie"}
+              date={date}
+            />
+          );
+        })}
       </div>
     </div>
   );

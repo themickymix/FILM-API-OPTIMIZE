@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { GetApi } from "../../../custom-hooks/GetApi";
 import Episode from "./Episode";
@@ -7,12 +7,13 @@ import EpisodeInfo from "./EpisodeInfo";
 import Recommendations from "./Recommendations";
 import Cast from "./Cast";
 import Reviews from "./Reviews";
+import { FilmContext } from "../../../FilmProvider";
 
 function TVResult() {
   const { id } = useParams();
   const [activeSection, setActiveSection] = useState("episode");
   const { season, episode, seasons, setSeason } = useSeasonEpisode();
-
+  const { setFilmTitle } = useContext(FilmContext);
   // Check if the id is invalid
   if (!id) {
     return <p>Invalid Movie ID</p>;
@@ -24,6 +25,15 @@ function TVResult() {
 
   const API_URL = `https://api.themoviedb.org/3/tv/${id}?language=en-US`;
   const { data, loading, error } = GetApi(API_URL);
+
+  useEffect(() => {
+    // If there's no data yet, clear the title to avoid showing the old one
+    if (data && data.name) {
+      setFilmTitle(data.name);
+    } else {
+      setFilmTitle(""); // Reset the title if no data is available
+    }
+  }, [data, setFilmTitle]); // Make sure to include setFilmTitle as a dependency
 
 if (loading)
   return (

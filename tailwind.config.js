@@ -1,13 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 import tailwindcssAnimated from "tailwindcss-animated";
 import daisyui from "daisyui";
+import lineClamp from "@tailwindcss/line-clamp";
 
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},
   },
-  plugins: [tailwindcssAnimated, daisyui],
+  plugins: [
+    tailwindcssAnimated,
+    daisyui,
+    lineClamp, // Add the line-clamp plugin here
+  ],
   daisyui: {
     themes: [
       {

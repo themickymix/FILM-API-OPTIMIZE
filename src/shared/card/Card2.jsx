@@ -3,9 +3,6 @@ import { Link } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { IMG_URL } from "../../server/config";
 
-// Fallback image URL
-const fallbackImage = "https://placehold.co/400x600?text=No+Image";
-
 function Card2({ img, name, date, id, type, country }) {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [hasError, setHasError] = useState(false); // Handle image load errors
@@ -21,19 +18,20 @@ function Card2({ img, name, date, id, type, country }) {
     setIsImageLoaded(true); // Hide skeleton loader even on error
   };
 
-  const types = type === "tv" ? " TV Show" : " Movie";
+  const types = type === "tv" ? "TV Show" : "Movie"; // Fallback if type is missing
 
   return (
     <Link
-      key={id}
-      to={`/${type}/${(name || "unknown") // Fallback for undefined name
-        .replace(/\s+/g, "-")
-        .replace(/-/g, "-")
-        .toLowerCase()}/${id}`}>
-      <div className="relative flex flex-col gap-2">
+      to={`/${type}/${encodeURIComponent(
+        (name || "unknown") // Fallback for undefined name
+          .replace(/\s+/g, "-") // Replace spaces with dashes
+          .replace(/[^a-zA-Z0-9-]/g, "") // Remove unwanted characters
+          .toLowerCase()
+      )}/${id}`}>
+      <div className="relative flex flex-col gap-1 overflow-hidden">
         {/* Skeleton Loader for image - Shown until image is loaded */}
         {!isImageLoaded && !hasError && (
-          <div className="skeleton rounded-md w-52 h-72 object-cover animate-pulse flex justify-center items-center text-center">
+          <div className="skeleton rounded-md w-52 h-72 animate-pulse flex justify-center items-center text-center">
             <span className="animate-fade">
               <Loader />
             </span>
@@ -45,34 +43,40 @@ function Card2({ img, name, date, id, type, country }) {
           className={`rounded-md w-52 h-72 object-cover ${
             isImageLoaded ? "" : "hidden"
           }`}
-          src={hasError ? fallbackImage : IMG_URL + img} // Use fallback image on error
+          src={IMG_URL + img}
           alt={name}
           onLoad={handleImageLoad}
           onError={handleImageError}
         />
 
-        {/* Skeleton for title */}
-        {!isImageLoaded && !hasError && (
-          <div className="skeleton h-4 w-full animate-pulse"></div>
-        )}
-
         {/* Movie/TV Show name and details */}
         <span>
           <div className="text-xs font-semibold whitespace-nowrap overflow-hidden text-ellipsis w-full">
-            <div>{name || "Unknown Title"}</div>
-            {/* Display a fallback for undefined name */}
-            {types + " "}
-            {date && (
-              <span>
-                <span className="font-normal text-gray-500">&bull;</span>
-                {" " + date + " "}
-              </span>
+            {/* Display name without skeleton if image is loaded */}
+            {isImageLoaded ? (
+              <div>{name || "Unknown Title"}</div>
+            ) : (
+              <div className="skeleton h-3 w-full animate-pulse mb-1"></div>
             )}
-            {country && (
-              <span>
-                <span className="font-normal text-gray-500">&bull;</span>
-                {" " + country}
-              </span>
+
+            {isImageLoaded ? (
+              <div>
+                {types}
+                {date && (
+                  <span>
+                    <span className="font-normal text-gray-500">&bull;</span>
+                    {" " + date + " "}
+                  </span>
+                )}
+                {country && (
+                  <span>
+                    <span className="font-normal text-gray-500">&bull;</span>
+                    {" " + country}
+                  </span>
+                )}
+              </div>
+            ) : (
+              <div className="skeleton h-3 w-full animate-pulse"></div>
             )}
           </div>
         </span>

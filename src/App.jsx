@@ -7,21 +7,24 @@ import Home from "./page/home/Home";
 import Navbar from "./components/Navbar";
 import SearchQuery from "./page/results/SearchQuery";
 import Search from "./page/Search";
+import { FilmProvider } from "./FilmProvider";
 
 function App() {
   return (
-    <BrowserRouter>
-    <Navbar/>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/movie" element={<Movie />} />
-        <Route path="/tv" element={<TV />} />
-        <Route path="/movie/:name/:id" element={<FilmResult />} />
-        <Route path="/tv/:name/:id" element={<FilmResult />} />
-        <Route path="/results" element={<SearchQuery />} />
-        <Route path="/search" element={<Search />} />
-      </Routes>
-    </BrowserRouter>
+    <FilmProvider>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/movie" element={<Movie />} />
+          <Route path="/tv" element={<TV />} />
+          <Route path="/movie/:name/:id" element={<FilmResult />} />
+          <Route path="/tv/:name/:id" element={<FilmResult />} />
+          <Route path="/results" element={<SearchQuery />} />
+          <Route path="/search" element={<Search />} />
+        </Routes>
+      </BrowserRouter>
+    </FilmProvider>
   );
 }
 

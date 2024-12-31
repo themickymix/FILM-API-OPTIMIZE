@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GetApi } from "../../custom-hooks/GetApi";
 import { useLocation } from "react-router-dom";
 import { IMG_URL } from "../../server/config";
 import Card2 from "../../shared/card/Card2";
+import { FilmContext } from "../../FilmProvider";
 
 function SearchQuery() {
   const location = useLocation();
@@ -10,7 +11,7 @@ function SearchQuery() {
   const searchQuery = queryParams.get("search");
   const [page, setPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
-
+  const { setFilmTitle } = useContext(FilmContext);
   if (!searchQuery) {
     return <p>Please enter a search term in the query parameter.</p>;
   }
@@ -36,6 +37,10 @@ function SearchQuery() {
     if (newPage === page) return;
     setPage(newPage);
   };
+
+  useEffect(() => {
+   setFilmTitle(searchQuery);
+  }, [searchQuery]); // Make sure to include setFilmTitle as a dependency
 
   return (
     <div className="p-4 md:p-8 lg:p-12 xl:p-16">
@@ -90,7 +95,7 @@ function SearchQuery() {
 
       {data && data.results && data.results.length > 0 ? (
         <div>
-          <h2>Results:</h2>
+          <h2>Results: {searchQuery}</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-5">
             {data.results.map((result) => {
               // Select the correct name/title field based on result type

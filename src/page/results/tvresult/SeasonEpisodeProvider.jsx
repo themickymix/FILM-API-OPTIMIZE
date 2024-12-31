@@ -12,13 +12,22 @@ export const useSeasonEpisode = () => {
 // Create a provider component to wrap the app or specific sections
 export const SeasonEpisodeProvider = ({ children }) => {
   const { id } = useParams();
-  const [season, setSeason] = useState(1);
-  const [seasons, setSeasons] = useState([]);
-  const [episode, setEpisode] = useState(1);
 
-  // Fetch seasons on initial load (only once)
+  // State initialization with localStorage values specific to the current TV show ID
+  const [season, setSeason] = useState(() => {
+    const storedSeason = localStorage.getItem(`season_${id}`);
+    return storedSeason ? parseInt(storedSeason, 10) : 1;
+  });
+
+  const [episode, setEpisode] = useState(() => {
+    const storedEpisode = localStorage.getItem(`episode_${id}`);
+    return storedEpisode ? parseInt(storedEpisode, 10) : 1;
+  });
+
+  const [seasons, setSeasons] = useState([]);
+
+  // Fetch seasons on initial load (only once per TV show)
   useEffect(() => {
-    // Fetch the details for the show to get all available seasons
     const fetchSeasons = async () => {
       const response = await fetch(
         `https://api.themoviedb.org/3/tv/${id}?language=en-US`
@@ -28,6 +37,16 @@ export const SeasonEpisodeProvider = ({ children }) => {
     };
     fetchSeasons();
   }, [id, seasons]);
+
+  // Update localStorage whenever season changes, specific to the current TV show ID
+  useEffect(() => {
+    localStorage.setItem(`season_${id}`, season);
+  }, [season, id]);
+
+  // Update localStorage whenever episode changes, specific to the current TV show ID
+  useEffect(() => {
+    localStorage.setItem(`episode_${id}`, episode);
+  }, [episode, id]);
 
   const value = {
     id, // Include id in the context value

@@ -16,7 +16,14 @@ function Card1({ img, name, date, id, type }) {
     setHasError(true); // Set error state if image fails to load
     setIsImageLoaded(true); // Hide skeleton loader even on error
   };
-
+const dates = (date) => {
+  if (!date) {
+    return "";
+  } else {
+    return date + " • ";
+  }
+};
+  const formattedDate = dates(date);
   return (
     <Link
       key={id}
@@ -25,7 +32,7 @@ function Card1({ img, name, date, id, type }) {
           .replace(/\s+/g, "-") // Replace spaces with dashes
           .replace(/[^a-zA-Z0-9-]/g, "") // Remove unwanted characters
           .toLowerCase()
-      )}/${id}`}>
+      )}/${id}`} >
       <div className="relative flex flex-col gap-2 overflow-hidden">
         {/* Skeleton Loader for image - Shown until image is loaded */}
         {!isImageLoaded && !hasError && (
@@ -52,7 +59,7 @@ function Card1({ img, name, date, id, type }) {
 
         <span className={`flex ${isImageLoaded ? "" : "hidden"}`}>
           <div className="text-xs font-semibold ml-1 whitespace-nowrap overflow-hidden text-ellipsis w-full">
-            {name}
+            {formattedDate} {name}
           </div>
         </span>
       </div>

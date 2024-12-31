@@ -3,23 +3,22 @@ import { GetApi } from "../../custom-hooks/GetApi";
 import Card1 from "../../shared/card/Card1";
 
 const TV = () => {
-    const [page, setPage] = useState(1);
-    const [maxPage, setMaxPage] = useState(1);
-  const API_URL =
-    `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${page}`;
+  const [page, setPage] = useState(1);
+  const [maxPage, setMaxPage] = useState(1);
+  const API_URL = `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${page}`;
   const { data, loading, error } = GetApi(API_URL);
 
-    // Update maxPage when data is available
-    useEffect(() => {
-      if (data?.total_pages) {
-        setMaxPage(data.total_pages); // Set max pages from API response
-      }
-    }, [data]);
-  
-    const handlePageChange = (newPage) => {
-      if (newPage === page) return;
-      setPage(newPage);
-    };
+  // Update maxPage when data is available
+  useEffect(() => {
+    if (data?.total_pages) {
+      setMaxPage(data.total_pages); // Set max pages from API response
+    }
+  }, [data]);
+
+  const handlePageChange = (newPage) => {
+    if (newPage === page) return;
+    setPage(newPage);
+  };
   if (!data) return data;
   if (error) return <p>Error: {error}</p>;
 
@@ -73,15 +72,20 @@ const TV = () => {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
-        {data.results.map((tv) => (
-          <Card1
-            key={tv.id}
-            name={tv.name}
-            img={tv.poster_path}
-            id={tv.id}
-            type={"tv"}
-          />
-        ))}
+        {data.results.map((tv) => {
+          const date = tv.first_air_date.split("-")[0];
+
+          return (
+            <Card1
+              key={tv.id}
+              name={tv.name}
+              img={tv.poster_path}
+              id={tv.id}
+              type={"tv"}
+              date={date}
+            />
+          );
+        })}
       </div>
       {/* Pagination */}
       <div
