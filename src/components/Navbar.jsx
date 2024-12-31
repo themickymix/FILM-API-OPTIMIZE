@@ -110,8 +110,8 @@ setActiveLink("");
           </div>
         </div>
       </div>
-      <div className=" w-1/2">
-        <div className="ml-1 whitespace-nowrap overflow-hidden text-ellipsis w-full">
+      <div className="w-1/2">
+        <div className="whitespace-nowrap overflow-hidden text-ellipsis w-full">
           {activeLink}
         </div>
       </div>
@@ -136,16 +136,17 @@ setActiveLink("");
 
       {isSearchVisible && (
         <div className="flex-1 flex justify-end">
-          <label className="input input-bordered flex items-center w-full md:w-1/4 animate-fade-left">
+          <label className="input input-bordered flex items-center animate-fade-left">
             <input
               type="text"
-              className="grow focus:outline-none focus:ring-0"
+              className=" focus:outline-none focus:ring-0"
               placeholder="Search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleSearch}
-              autoFocus
+              autoFocus={location.pathname === "/search"} // Conditionally add autoFocus
             />
+
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
